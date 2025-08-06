@@ -1,1 +1,44 @@
+import React, { useState } from 'react';
+
+function App() {
+  const [topics, setTopics] = useState(1);
+  const [country, setCountry] = useState('us');
+
+  const handlePost = async () => {
+    const res = await fetch('https://your-server-url.com/api/post', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ topics, country }),
+    });
+
+    const result = await res.json();
+    alert(result.message || 'Posted successfully!');
+  };
+
+  return (
+    <div style={{ padding: 20 }}>
+      <h2>Facebook Auto Poster</h2>
+      <label>
+        Country Code:
+        <input
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
+        />
+      </label>
+      <br />
+      <label>
+        Number of Posts:
+        <input
+          type="number"
+          value={topics}
+          onChange={(e) => setTopics(e.target.value)}
+        />
+      </label>
+      <br />
+      <button onClick={handlePost}>Auto Post to Facebook</button>
+    </div>
+  );
+}
+
+export default App;
 
